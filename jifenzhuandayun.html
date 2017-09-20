@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" id="viewport">
+    <title>积分转大运</title>
+    <link rel="stylesheet" href="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/8yuexiaomiqudao/swiper.min.css">
+    <style>
+        * { margin: 0;  padding: 0;  }
+        body {  width: 100%;  height: 100%;  font-family: "PingFang SC Regular";  background: #501fa7;  padding-bottom: 1.5rem;  overflow-x: hidden  }
+        .box {  position: relative;  }
+        .box img { display: block  }
+        #deng {  width: 80%;  padding: 4%;  margin: 0 auto;  background-size: 100% 100%;}
+        .shanDeng {  background: url("http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/deng1.png")no-repeat;  }
+        .shanDeng2 {background: url("http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/deng2.png")no-repeat  }
+        .items { background: #faf1ff;  text-align: center;  padding: 4% 0;  width: 32%;  border-radius: .5rem;  position: relative;  }
+        .items img { width: 70%;  text-align: center;  display: inline-block;  vertical-align: middle  }
+        .lottery-mid,.lottery-foot { margin-top: .5rem;  }
+        .footer { text-align: center;  color: #fff;  margin-top: 1.5rem;  }
+        .num { color: #f6d63b;  font-weight: 600  }
+        .lottery-btn {margin-top: 1rem; }
+        .lottery-btn div {  display: inline-block  }
+        .left-btn { text-align: center;  padding: 0.5rem 2.5rem;  background: #ff4040;  color: #fff;  border-radius: 999px;  margin-right: 1rem;  }
+        .right-btn { text-align: center;  padding: 0.5rem 2.5rem;  background: #ff4040;  color: #fff;  border-radius: 999px;  }
+        .my-jf { position: absolute;  width: 20rem;  left: 50%;  margin-left: -9rem;  bottom: 0.3rem;  text-align: center;  color: #fff;  font-family: "PingFang SC Regular"  }
+        /*===滚动播放===*/
+        .swiper-container {width: 100%;  height: 1rem!important;  position: absolute;  bottom: -0.7rem;  left: 0.5rem;  }
+        .swiper-slide { color: #fff;  text-align: center;  font-size: 0.875rem;  width: 80%;  line-height: 2rem;  margin: 0 auto;  display: -webkit-box;  display: -ms-flexbox;  display: -webkit-flex;  display: flex;  -webkit-box-pack: center;  -ms-flex-pack: center;  -webkit-justify-content: center;  justify-content: center;  -webkit-box-align: center;  -ms-flex-align: center;  -webkit-align-items: center;  align-items: center;  }
+        .lottery{ display: flex; display: -webkit-flex; justify-content: space-between; flex-wrap: wrap;-webkit-flex-wrap: wrap;}
+        .items { background: #faf1ff;  text-align: center;  padding: 4% 0;  width: 32%; border-radius: .5rem;  position: relative;  margin-top: .5rem;  }
+        .items img {  width: 70%;  text-align: center;  display: inline-block;  vertical-align: middle  }
+        .another-active {  background: #02C8FA  }
+        .cj-active { background: #02C8FA;  }
+        .zmx_dialog_wrap{z-index: 99;  position: fixed;  left:0;  top:0;  width:100%;  height:100%;  background-color: rgba(0,0,0,.5);}
+        .zmx_dialog_bg{width:100%;  height:100%;  display: flex;  display: -webkit-flex;  display: -webkit-box;  display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */  display: -ms-flexbox;      /* TWEENER - IE 10 */  -webkit-box-pack:center;  -webkit-justify-content:center;  -ms-flex-pack:center;  justify-content:center;  -webkit-box-align:center;  -webkit-align-items:center;  -ms-flex-align:center;  align-items:center;  }
+        .zmx_dialog_bg .zmx_dialog_container{  width:80%;    background: #fff;  border-radius: 10px;  -webkit-border-radius: 10px;  text-align: center;  color: #333;  font-size:1.2rem;  padding:2rem 1rem 1rem 1rem;  }
+        .zmx_dialog_bg0{display: none}
+        .zmx_dialog_bg1{display: none}
+        .zmx_dialog_bg2{display: none}
+        .zmx_dialog_btn{margin:1rem 0 1rem 0;  }
+        .zmx_dialog_btn div{display: inline-block;}
+        .zmx_dialog_btn_common{    line-height:2rem;  -webkit-border-radius:2rem;  -moz-border-radius:2rem;  border-radius:2rem;  text-align: center; }
+        .zmx_dialog_btn_cancel{ width:10rem;  height:2rem; background-color: #ff4040;  color: #fff;}
+        .zmx_dialog_title{color:#333;font-size:1.2rem;font-family: "PingFang SC Regular";}
+        .qx_gift_img img{display: block}
+        .double-btn div{display: inline-block}
+        .sure{background: #ff4040;width:6rem;  height:2rem;color:#fff;}
+        .cancel{border:1px solid #ff4040;color:#333;width:6rem;  height:2rem;}
+        .top{font-size:1.4rem;font-weight:700}
+        .my-reward{width:40%}
+        .dialog-tip{color:#a19996;font-size:1rem;}
+        .items-num{display: none;position: absolute;right:0;top:0;width:1.6rem;height:1.2rem;border-radius:1rem;background: #ff4040;text-align: center;  font-size:0.875rem;color:#fff;line-height:1.2rem;}
+        .margin{margin-top:0}
+        .zmx-reward-pic{display: flex;display: -webkit-flex; flex-wrap: wrap;-webkit-flex-wrap: wrap;justify-content: center}
+        .my-reward-pic{width:28%;height:30%}
+        .zmx_dialog_bg3{display: none}
+        .btn-rule { position: fixed;  right: 0;  top: 6rem;  background-color: #7649bb;  color: #fff;  border: 2px solid #fff;  border-right: 0;  border-radius: .5rem 0 0 .5rem;  word-break: break-all;  white-space: pre-wrap;  width: 1rem;  padding: .5rem;  text-align: center;  line-height: 1.1;  height: 5rem;  z-index: 22;  }
+        .dialog {position: fixed;width: 100%;  left: 0;  top: 0;  height: 100%;  background-color: rgba(0,0,0,.5);  display: none;  }
+        .dialog-box {background-color: #fff;  width: 90%;  position: fixed;  left: 5%;  top: 30%;  border-radius: 1rem;  }
+        .d-box-head {text-align: center;  position: relative;  text-align: right;  margin: 0 1rem;  font-weight: 300;  padding: .5rem 0;  }
+        .head-tit {text-align: center;  position: absolute;  width: 100%;  top: .875rem;  left: 0;  font-size: 1.25rem;  color: #333;  }
+        .dialog-close {font-size: 1.5rem;  font-weight: 200;  color: #333;  right: 0;  top: -.5rem;  position: relative;  }
+        .border-bottom-solid {border-bottom: 1px solid #ddd;}
+        .d-box-body {padding: .5rem 1rem 1.5rem;  max-height: 20rem;overflow-y: scroll;  }
+        .d-box-body p:first-child {  margin-top: .25rem;}
+        .d-box-body p { font-size: .875rem;  margin-top: 0.5rem;  font-weight: 300;  color: #333;  }
+        .zmx_dialog_bg4{display: none}
+        .jf-go{width:9rem;height:2rem;line-height: 2rem;background: #ff4040;color:#fff;}
+        .jf-cancel{width:9rem;height:2rem;line-height: 2rem;  border:1px solid #ff4040;color:#ff4040}
+        .box-address{position: absolute;width:8rem;height:2rem;left:1rem;top:-0.5rem;}
+        .box-record{position: absolute;width:8rem;height:2rem;right:1rem;top:-0.5rem;}
+        .table td{text-align: center;font-size:0.875rem;border-bottom: 1px solid #f0f0f0;padding:0.7rem 0}
+        .table th{font-weight: normal}
+        .border{border-bottom:1px solid #808080}
+        .td-color{color:#ff4040}
+        .td-time{color:#808080}
+        .td-jf{color:#808080}
+    </style>
+</head>
+
+<body>
+<!--右侧活动规则-->
+<div class="btn btn-rule">活动规则<img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/wenhao.png" width="100%"> </div>
+<div class="box">
+    <div class="box">
+        <img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/jf_03.png" width="100%">
+    </div>
+    <div class="box">
+        <img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/jf_05.png" width="100%">
+        <div class="my-jf">&nbsp;&nbsp;我的积分：200000积分</div>
+    </div>
+    <div class="box">
+        <img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/jf_06.png" width="100%">
+    </div>
+</div>
+<div class="box">
+    <img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/jf_07.png" width="100%">
+    <div class="swiper-container" style="margin:1rem 0;">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">刚刚用户134****23$5&nbsp;&nbsp;&nbsp;投资获得小米二级</div>
+            <div class="swiper-slide">刚刚用户13488882222&nbsp;&nbsp;&nbsp;投资获得小米画板</div>
+            <div class="swiper-slide">*用户8888&nbsp;&nbsp;&nbsp;投资获得小米插线板</div>
+            <div class="swiper-slide">*用户8888&nbsp;&nbsp;&nbsp;投资获得小米插线板</div>
+        </div>
+    </div>
+</div>
+<div class="box">
+    <img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/jf_08.png" width="100%">
+</div>
+<!--抽奖核心-->
+<div class="shanDeng" id="deng">
+    <div class="lottery" id="lottery">
+        <div class="items lottery-unit-0 margin" time="0">
+            <img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/lottery_blank_01.png" >
+            <div class="items-num">x1</div>
+        </div>
+        <div class="items lottery-unit-1 margin" time="0">
+            <img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/lottery_blank_02.png" >
+            <div class="items-num"></div>
+        </div>
+        <div class="items lottery-unit-2 margin" time="0">
+            <img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/lottery_blank_03.png" >
+            <div class="items-num"></div>
+        </div>
+        <div class="items lottery-unit-3" time="0">
+            <img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/lottery_blank_04.png" >
+            <div class="items-num"></div>
+        </div>
+        <div class="items lottery-unit-4" time="0">
+            <img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/lottery_blank_05.png" >
+            <div class="items-num"></div>
+        </div>
+        <div class="items lottery-unit-5" time="0">
+            <img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/lottery_blank_06.png" >
+            <div class="items-num"></div>
+        </div>
+        <div class="items lottery-unit-6" time="0">
+            <img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/lottery_blank_09.png" >
+            <div class="items-num"></div>
+        </div>
+        <div class="items lottery-unit-7" time="0">
+            <img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/lottery_blank_08.png" >
+            <div class="items-num"></div>
+        </div>
+        <div class="items lottery-unit-8" time="0">
+            <img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/1_21.png" >
+            <div class="items-num"></div>
+        </div>
+    </div>
+</div>
+<!--按钮-->
+<div class="footer">
+    <p>*抽一次消耗<span class="num">500</span>积分</p>
+    <div class="lottery-btn">
+        <div class="left-btn">抽1次</div>
+        <div class="right-btn">抽5次</div>
+    </div>
+</div>
+<!--底部-->
+<div class="box" style="margin-top:0.9rem;">
+    <img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/addres_10.png" width="100%">
+    <div class="box-address"></div>
+    <div class="box-record"></div>
+</div>
+<!--未中奖提示-->
+<div class="zmx_dialog_wrap zmx_dialog_bg0">
+    <div class="zmx_dialog_bg ">
+        <div class="zmx_dialog_container">
+            <div class="zmx_dialog_title">
+                与奖品擦肩而过，谢谢参与~
+            </div>
+            <div class="zmx_dialog_btn">
+                <div class="zmx_dialog_btn_cancel zmx_dialog_btn_common">确定</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--抽五次消耗积分确认-->
+<div class="zmx_dialog_wrap zmx_dialog_bg1">
+    <div class="zmx_dialog_bg ">
+        <div class="zmx_dialog_container">
+            <div class="zmx_dialog_title">
+                确认消耗2500积分抽奖？
+            </div>
+            <div class="zmx_dialog_btn double-btn">
+                <div class="cancel zmx_dialog_btn_common">取消</div>
+                <div class="zmx_dialog_btn_common sure">确定</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--抽一次中奖-->
+<div class="zmx_dialog_wrap zmx_dialog_bg2">
+    <div class="zmx_dialog_bg ">
+        <div class="zmx_dialog_container">
+            <div class="zmx_dialog_title top">
+                恭喜，您已获奖
+            </div>
+            <img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/lottery_blank_01.png" class="my-reward">
+            <p class="dialog-tip">（30天及以上，满8000元使用）</p>
+            <div class="zmx_dialog_btn">
+                <div class="zmx_dialog_btn_cancel zmx_dialog_btn_common zmx-sure">确定</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--抽五次中奖-->
+<div class="zmx_dialog_wrap zmx_dialog_bg3">
+    <div class="zmx_dialog_bg ">
+        <div class="zmx_dialog_container">
+            <div class="zmx_dialog_title top">
+                恭喜，您已获奖
+            </div>
+            <div class="zmx-reward-pic">
+                <img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/lottery_blank_01.png" class="my-reward-pic">
+                <img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/lottery_blank_01.png" class="my-reward-pic">
+                <img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/lottery_blank_01.png" class="my-reward-pic">
+                <img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/lottery_blank_01.png" class="my-reward-pic">
+                <img src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/lottery_blank_01.png" class="my-reward-pic">
+            </div>
+
+            <p class="dialog-tip">（30天及以上，满8000元使用）</p>
+            <div class="zmx_dialog_btn">
+                <div class="zmx_dialog_btn_cancel zmx_dialog_btn_common zmx-sure">确定</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--活动规则-->
+<div class="dialog-rule dialog" data-dialog="rule">
+    <div class="dialog-box">
+        <div class="d-box-head border-bottom-solid">
+            <div class="head-tit">活动规则</div>
+            <span class="dialog-close" data-dialog="close-rule">×</span>
+        </div>
+        <div class="d-box-body">
+            <p>1.用户每抽奖1次将消耗500积分；</p>
+            <p>2.抽中的积分、红包、体验金实时到账，积分在“爱家-我的积分”查看，可在积分商城兑换礼品，不参与积分龙虎榜活动；红包在“爱家-我的奖励”查看，有效期7天；体验金在“爱家-我的奖励”查看，共计息5天；</p>
+            <p>3.京东卡将在中奖后15个工作日内以电子卡密形式发送至站内信消息；</p>
+            <p>4.实物奖品将在中奖后15个工作日内安排寄送，颜色默认随机发放，请在收货地址处填写正确的收货信息，如您未填写且在15个工作日内客服无法与您取得联系，则视为放弃该奖励；</p>
+            <p>5.本活动最终解释权归人人爱家金融所有，若发现作弊行为，将取消该账户的中奖权限。</p>
+        </div>
+    </div>
+</div>
+<!--积分不够-->
+<div class="zmx_dialog_wrap zmx_dialog_bg4">
+    <div class="zmx_dialog_bg ">
+        <div class="zmx_dialog_container">
+            <div class="zmx_dialog_title">
+                啊哦，你的积分不够哦~
+            </div>
+            <div class="zmx_dialog_btn double-btn">
+                <div class="jf-go zmx_dialog_btn_common">翻牌赚积分</div>
+                <div class="zmx_dialog_btn_common jf-cancel">我知道了</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--获奖记录-->
+<div class="dialog my-record" data-dialog="gift-my" >
+    <div class="dialog-box">
+        <div class="d-box-head border-bottom-solid">
+            <div class="head-tit">我的翻牌记录</div>
+            <span class="dialog-close" data-dialog="close-gift-my">×</span>
+        </div>
+        <div class="d-box-body">
+            <table  width="100%" cellspacing="0" >
+                <tbody class="table">
+                <tr class="border">
+                    <th width="30%">奖品</th>
+                    <th width="40%">中奖时间</th>
+                    <th width="30%">消耗积分</th>
+                </tr>
+                <tr>
+                    <td class="td-color">小米蓝牙耳机</td>
+                    <td class="td-time">10-03 10:03:05</td>
+                    <td class="td-jf">400</td>
+                </tr>
+                <tr>
+                    <td class="td-color">小米蓝牙耳机</td>
+                    <td class="td-time">10-03 10:03:05</td>
+                    <td class="td-jf">400</td>
+                </tr>
+                </tbody></table>
+        </div>
+    </div>
+</div>
+<script src="http://cdn.renrenaijia.com/CDN/lib/zepto/zepto.touch.min.js"></script>
+<script src="http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/8yuexiaomiqudao/swiper.min.js"></script>
+<script>
+    //TODO 轮播
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        direction: 'vertical',
+        autoplay: 1500,//可选选项，自动滑动
+        loop: true,
+        slidesPerView: 1,
+        slidesPerColumn: 1,
+        spaceBetween: 15
+    });
+    var num = 0;
+     click = false;
+     //TODO 闪灯
+    $('.shanDeng').attr('class', function () {
+        setInterval(function () {
+            num++;
+            if (num % 2 === 0) {
+                $('#deng').addClass('shanDeng2');
+            } else {
+                $('#deng').removeClass('shanDeng2');
+                $('#deng').addClass('shanDeng');
+            }
+        }, 100)
+    });
+    //TODO 按钮点击
+    $(function () {
+        lottery.init('lottery');
+        $(".left-btn").click(function () {
+            console.log('我点击了')
+            console.log(click);
+            if (click) {
+                console.log(11)
+                return false;
+            } else {
+                index=2;
+                lottery.speed = 10;
+                roll();
+                click = true;
+                return false;
+            }
+        });
+
+        rollnum = -1;
+        $('.right-btn').click(function () {
+            $('.zmx_dialog_bg1').show();
+            $('.sure').on('tap',function () {
+                $('.zmx_dialog_bg1').hide();
+                indexArray = [0,0,1,1,1];
+                if (click) {
+                    return false;
+                } else {
+                    console.log(indexArray);
+                    lottery.speed = 100;
+                    fiveRoll();
+                    click=true;
+                    return false;
+                }
+            });
+            $('.cancel').on('tap',function () {
+                $('.zmx_dialog_bg1').hide();
+            })
+        })
+    })//end
+    //TODO 抽奖状态
+    var lottery = {
+        index: -1,     //当前转动到哪个位置，起点位置
+        count: 0,     //总共有多少个位置
+        timer: 0,     //setTimeout的ID，用clearTimeout清除
+        speed: 10,   //初始转动速度
+        times: 0,     //转动次数
+        cycle: 30,    //转动基本次数：即至少需要转动多少次再进入抽奖环节
+        prize: -1,    //中奖位置
+        init: function (id) {
+            if ($("#" + id).find(".items").length > 0) {
+                $lottery = $("#" + id);                   //抽奖最外层id
+                $units = $lottery.find(".items");       //找到抽奖单元
+                this.obj = $lottery;
+                this.count = $units.length;             //总共有多少个奖品
+                $lottery.find(".lottery-unit-" + this.index).addClass("cj-active"); // 初始化是没有激活状态
+            }
+        },
+        roll: function () {
+            var index = this.index;
+            var count = this.count;
+            var lottery = this.obj;
+            $(lottery).find(".lottery-unit-" + index).removeClass("cj-active");   //让index未增加1时的奖品去掉激活状态
+            index += 1;                 //index 开始递增
+            if (index > count - 1) {        //当index超过奖品数量-1时 让index从零开始
+                index = 0;
+            }
+            $(lottery).find(".lottery-unit-" + index).addClass("cj-active"); // 开始递增后下一个为激活
+            this.index = index;           //保存记录下现在的index
+            return false;               //结束滚动
+        }
+    };
+    //TODO 抽五次
+    function fiveRoll() {
+        lottery.times += 2;
+        for (var i = 0; i < indexArray.length; i++) {
+            lottery.prize = indexArray[i];
+        }
+        if (lottery.times > lottery.cycle + 10 && lottery.prize == lottery.index){
+            click = false;
+            rollnum++;
+            if(rollnum==4){
+                count1=count1+1
+                if($(".lottery-unit-" + indexArray[rollnum]).hasClass('another-active')){
+                    $(".lottery-unit-" + indexArray[rollnum]).find('.items-num').text('x'+count1).show();
+                }
+                setTimeout(function () {
+                    $('.zmx_dialog_bg3').show();
+                },800);
+                $('.zmx-sure').on('tap',function () {
+                    $('.zmx_dialog_bg3').hide();
+                    location.reload()
+                })
+            }
+            if (rollnum < indexArray.length-1) {
+                console.log(22222);
+                $(".lottery-unit-" + indexArray[rollnum]).addClass("another-active");
+                 time1 =Number($(".lottery-unit-" + indexArray[rollnum]).attr('time')) ;
+                console.log(time1);
+                count1 = time1 + 1;
+                $(".lottery-unit-" + indexArray[rollnum]).attr('time', count1);
+                if(count1 > 1) {
+                    $(".lottery-unit-" + indexArray[rollnum]).find('.items-num').text('x'+count1).show();
+                }
+                clearTimeout(lottery.timer);        //让指定奖品显示出来，结束旋转
+                lottery.prize = -1;                   //初始化抽奖信息位置
+                lottery.times = 0;
+                fiveRoll();
+                lottery.speed = 10;
+            } else {
+                click = true;
+                return false;
+            }
+        } else {
+            if (lottery.times < lottery.cycle) {
+                lottery.speed -= 10;
+            } else {
+                if (lottery.times > lottery.cycle + 10 && ((lottery.prize == 0 && lottery.index == 11) || lottery.prize == lottery.index + 1)) {
+                    lottery.speed += 20;
+                } else {
+                    lottery.speed += 10;
+                }
+            }
+            if (lottery.speed < 40) {
+                lottery.speed = 30;
+            };
+            lottery.timer = setTimeout(fiveRoll, lottery.speed);//循环调用
+        }
+        lottery.roll();//转动过程调用的是lottery的roll方法，这里是第一次调用初始化
+        return false
+    }
+    //TODO 抽一次
+    function roll(){
+        lottery.prize = index;
+        lottery.times += 1;
+        lottery.roll();//转动过程调用的是lottery的roll方法，这里是第一次调用初始化
+        console.log(lottery.index);
+        if (lottery.times > lottery.cycle+10 && lottery.prize==lottery.index) {
+            var oPrize=lottery.prize;
+            console.log(oPrize+"sssssssssss");
+            clearTimeout(lottery.timer);
+            lottery.prize=-1;
+            lottery.times=0;
+            click=false;
+            var url1='http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/lottery_blank_01.png';
+            var url2='http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/lottery_blank_02.png';
+            var url3='http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/lottery_blank_03.png';
+            var url5='http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/lottery_blank_04.png';
+            var url6='http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/lottery_blank_05.png';
+            var url7='http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/erji3.png';
+            var url8='http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/lottery_blank_08.png';
+            var url9='http://cdn.renrenaijia.com/CDN/app/Public/images/kmjrAppV3/page/jifenzhuandayun/lottery_blank_09.png';
+            if(oPrize==0){
+                $('.my-reward').prop('src',url1)
+                var time1= setTimeout(function () {
+                    $('.zmx_dialog_bg0').show();
+                },500);
+            }else if(oPrize==1){
+                $('.my-reward').prop('src',url2)
+                var time1= setTimeout(function () {
+                    $('.zmx_dialog_bg0').show();
+                },500);
+            }else if(oPrize==2){
+                $('.my-reward').prop('src',url3)
+                var time1= setTimeout(function () {
+                    $('.zmx_dialog_bg2').show();
+                },500);
+            }else if(oPrize==3){
+
+                var time1= setTimeout(function () {
+                    $('.zmx_dialog_bg0').show();
+                },500);
+            }else if(oPrize==4){
+                $('.my-reward').prop('src',url5)
+                var time1= setTimeout(function () {
+                    $('.zmx_dialog_bg2').show();
+                },500);
+            }else if(oPrize==5){
+                $('.my-reward').prop('src',url6)
+                var time1= setTimeout(function () {
+                    $('.zmx_dialog_bg2').show();
+                },500);
+            }else if(oPrize==6){
+                $('.my-reward').prop('src',url7)
+                var time1= setTimeout(function () {
+                    $('.zmx_dialog_bg2').show();
+                },500);
+            }else if(oPrize==7){
+                $('.my-reward').prop('src',url8)
+                var time1= setTimeout(function () {
+                    $('.zmx_dialog_bg2').show();
+                },500);
+            }else if(oPrize==8){
+                $('.my-reward').prop('src',url9)
+                var time1= setTimeout(function () {
+                    $('.zmx_dialog_bg2').show();
+                },500);
+            }
+            $('.zmx_dialog_btn_common').on('click',function () {
+                $('.zmx_dialog_bg0').hide();
+            });
+            $('.zmx-sure').on('tap',function () {
+                $('.zmx_dialog_bg2').hide();
+            })
+        }else{
+            if (lottery.times<lottery.cycle) {
+                lottery.speed -= 10;
+            }else{
+                if (lottery.times > lottery.cycle+10 && ((lottery.prize==0 && lottery.index==11) || lottery.prize==lottery.index+1)) {
+                    lottery.speed += 50;
+                }else{
+                    lottery.speed += 20;
+                }
+            }
+            if (lottery.speed<40) {
+                lottery.speed=30;
+            }
+            lottery.timer = setTimeout(roll,lottery.speed);//循环调用
+        }
+        return false;
+    }
+    //TODO 活动规则
+    $('.btn-rule').on('tap',function () {
+        $('.dialog-rule').show();
+    });
+    $('.d-box-head').on('tap',function () {
+        $('.dialog-rule').hide();
+        $('.my-record').hide();
+    })
+    //TODO 获奖规则
+    $('.box-record').on('tap',function () {
+        $('.my-record').show();
+    })
+</script>
+</body>
+</html>
